@@ -1,14 +1,6 @@
 /* 아래 ES5 코드를 ES6 코드로 변경합니다. ------------------------------------------------ */
 
-const defaultArg = (value, initialValue) => {
-  if (value === null || value === undefined) {
-    value = initialValue;
-  }
-  return value;
-};
-
-const truncateText = (text, limit) => {
-  limit = defaultArg(limit, 100);
+const truncateText = (text, limit = 100) => {
   return `${text.slice(0, limit).trim()}...`;
 };
 
@@ -20,5 +12,9 @@ const desc = `
 /* 테스트 코드를 작성합니다. ----------------------------------------------------------- */
 
 // truncateText(desc) 반환 값의 글자 수
+test('truncateText(desc) 반환 값의 글자 수', () => {
+  let sliceCount = 62;
+  expect(truncateText(desc, sliceCount)).toHaveLength(sliceCount + 3);
+});
 
 // truncateText(desc, 43) 반환 값의 글자 수
