@@ -82,3 +82,42 @@ var AriaButton = createClass(
   },
   Button
 );
+
+/* -------------------------------------------------------------------------- */
+
+// Button
+class Button {
+  constructor(domNode, options = {}) {
+    this._node = domNode;
+    this.config = { ...defaultOptions, ...options };
+    // this.handleClick = this.handleClick.bind(this);
+  }
+
+  static defaultOptions = {
+    className: 'button',
+  };
+
+  handleClick(e) {
+    // e.target // this._node;
+    // function innerFunction() {
+    //   console.log(this); // undefined
+    // }
+    const inner = () => {
+      console.log(this.method());
+    };
+
+    innerFunction();
+  }
+
+  render() {
+    this._node.classList.add(this.config.className);
+    this._node.addEventListener('click', this.handleClick);
+    return this._node.innerHTML;
+  }
+}
+// ToggleButton
+class ToggleButton extends Button {
+  constructor(...args) {
+    super(...args);
+  }
+}
