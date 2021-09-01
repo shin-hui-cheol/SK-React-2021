@@ -4,8 +4,14 @@
 // 나머지 매개변수 (집합)
 // ----------------------------------------------------------------------------------
 
+const demoMultiplyCount = (first, ...rest) =>
+  rest.reduce((acc, cur, idx) => (idx === 0 ? acc + cur : acc * cur), first);
+
+demoMultiplyCount(101, 3, 6, 9);
+
 var multiplyCount = function () {
   var first = arguments[0]; // 첫번째 매개변수
+  // Array.prototype.slice.call(thisArg, arg1, arg2, ...)
   var rest = [].slice.call(arguments, 1); // 나머지 매개변수
 
   for (var i = 0, l = rest.length; i < l; ++i) {
