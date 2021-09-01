@@ -15,12 +15,33 @@ const watch = () => {
 
 /* 아래 ES5 코드를 ES6 코드로 변경합니다. ------------------------------------------------ */
 
-var euid = {
-  name: '이듬',
-  show: show,
-  look: look,
-  watch: watch,
-};
+const computedProp = 'eating';
+
+const euid = Object.freeze({
+  _name: '이듬',
+  show, // f
+  look, // f // 객체 (자신의 컨텍스트 참조)
+  watch, // arrow function expression -> this 상위 컨텍스트 참조
+  [computedProp]() {
+    return `${this.name} 먹다.`;
+  },
+  sleep: () => {
+    return `${this.name} 자다.`;
+  },
+  get name() {
+    return this._name;
+  },
+  set name(newName) {
+    this._name = newName;
+  },
+});
+
+console.log(euid.show()); // this => euid {}
+console.log(euid.look()); // this => euid {}
+console.log(euid.watch()); // this => undefined
+console.log(euid[computedProp]()); // this => undefined
+console.log(euid.eating()); // this => undefined
+console.log(euid.sleep()); // this => undefined
 
 /* 테스트 코드를 작성합니다. ----------------------------------------------------------- */
 
