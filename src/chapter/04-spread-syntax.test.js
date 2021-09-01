@@ -19,37 +19,15 @@ test('maxInt 결과 값', () => {
 // 객체 전개
 // ----------------------------------------------------------------------------------
 
-// 객체 합성 유틸리티 함수
-var extend = function () {
-  var _mixinObject = arguments[0];
-  var _restObjects = [].slice.call(arguments, 1);
-
-  var _mixin = function (o1, o2) {
-    for (var key in o2) {
-      if ({}.hasOwnProperty.call(o2, key)) {
-        var value = o2[key];
-        if (value && typeof value === 'object' && value.length) {
-          o1[key] = (o1[key] || []).concat(value);
-        } else if (value && typeof value === 'object' && !value.length) {
-          o1[key] = _mixin(o1[key] || {}, value);
-        } else {
-          o1[key] = value;
-        }
-      }
-    }
-    return o1;
-  };
-
-  for (var i = 0, l = _restObjects.length; i < l; ++i) {
-    _mixin(_mixinObject, _restObjects[i]);
-  }
-
-  return _mixinObject;
-};
-
 // 상태 업데이트 유틸리티 함수
 var setState = function (newState) {
-  return extend({}, state, newState);
+  // state 속성 전개
+  // newState 속성 전개
+  // 병합된 새 상태 객체
+  return {
+    ...state,
+    ...newState,
+  };
 };
 
 // 상태 객체 (불변 데이터 화)
@@ -63,3 +41,25 @@ var state = Object.freeze({
 
 // 테스트 코드를 작성합니다.
 // setState 유틸리티
+
+test('setState 유틸리티', () => {
+  const newState = setState({
+    loading: true,
+  });
+
+  expect(newState.loading).toBeTruthy();
+});
+
+test('setState() 유틸리티: 중첩된 객체 병합', () => {
+  const newState = setState({
+    data: [...state.data, { id: 201, title: '추가 데이터' }],
+  });
+
+  expect(newState).toStrictEqual({
+    ...state,
+    data: [
+      { id: 101, title: '초기 데이터' },
+      { id: 201, title: '추가 데이터' },
+    ],
+  });
+});
