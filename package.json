@@ -1,0 +1,22 @@
+{
+  "private": true,
+  "scripts": {
+    "compile": "babel src/chapter/*.js -d compiled",
+    "watch": "npm run compile -- --watch",
+    "test": "jest --watchAll",
+    "clear": "rimraf -rf compiled"
+  },
+  "jest": {
+    "testPathIgnorePatterns": ["/node_modules/", "/compiled/"]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@types/jest": "^27.0.1",
+    "eslint": "^7.32.0",
+    "eslint-plugin-jest": "^24.4.0",
+    "jest": "^27.1.0",
+    "rimraf": "^3.0.2"
+  }
+}
